@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="encode.css" />
+    <!-- load tfjs+usm -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/universal-sentence-encoder"></script>
+    <script src="./encode.js" type="module"></script>
+  </head>
+  <body>
+    <h1>Universal Sentence Encoder (use) encoding</h1>
+    <hr />
+    <label for="input_text">text to be encoded</label><input id="input_text" type="text" />
+    <input type="button" id="encode_button" value="encode" disabled="true" />
+    <div id="output_text"></div>
+  </body>
+  <script type="module">
+    import { encode } from "./encode.js";
+    const encode_button = document.getElementById("encode_button");
+    const input_text_element = document.querySelector("#input_text");
+    const output_text_div = document.getElementById("output_text");
+    window.addEventListener("load", () => {
+      console.log("... loading model...");
+      use.load().then((model) => {
+        console.log("... model loaded ...");
+        window.model = model;
+        encode_button.addEventListener("click", (event) => {
+          console.log("click...");
+          console.log(`model: `, model);
+          console.log("tokenizer: ", model.tokenizer);
+          encode(model, input_text_element.value, output_text_div);
+        });
+        console.log("... ready to rock and roll!!");
+        encode_button.disabled = false;
+      });
+    });
+  </script>
+</html>

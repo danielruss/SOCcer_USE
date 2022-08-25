@@ -2,23 +2,49 @@
 <html>
   <head>
     <link rel="stylesheet" href="encode.css" />
+
     <!-- load tfjs+usm -->
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/universal-sentence-encoder"></script>
+    <!-- load papa parse -->
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
     <script src="./encode.js" type="module"></script>
   </head>
   <body>
     <h1>Universal Sentence Encoder (use) encoding</h1>
     <hr />
-    <label for="input_text">text to be encoded</label><input id="input_text" type="text" />
-    <input type="button" id="encode_button" value="encode" disabled="true" />
-    <div id="output_text"></div>
+    <div class="container">
+      <div class="box">
+        <label for="input_text">text to be encoded</label><input id="input_text" type="text" />
+        <input type="button" id="encode_button" value="encode" disabled="true" />
+      </div>
+      <div class="box">
+        <form>
+          <input id="datafile" type="file" accept="text/csv" disabled="true" />
+          <input type="button" id="encode_file_button" value="encode_file" disabled="true" />
+          <br />looks for a csv, which should have a column labelled JobTitle.
+        </form>
+      </div>
+      <div class="wide box" id="output_text"></div>
+    </div>
   </body>
+
   <script type="module">
-    import { encode } from "./encode.js";
+    import { encode, encodeFile } from "./encode.js";
+    const input_text_element = document.getElementById("input_text");
     const encode_button = document.getElementById("encode_button");
-    const input_text_element = document.querySelector("#input_text");
+    const input_file_element = document.getElementById("datafile");
+    const encode_file_button = document.getElementById("encode_file_button");
     const output_text_div = document.getElementById("output_text");
+
+    input_file_element.addEventListener("change", (event) => {
+      encode_file_button.disabled = event.target.value.length == 0;
+    });
+
+    encode_file_button.addEventListener("click", (event) => {
+      encodeFile(window.model, input_file_element, output_text_div);
+    });
+
     window.addEventListener("load", () => {
       console.log("... loading model...");
       use.load().then((model) => {
@@ -32,6 +58,7 @@
         });
         console.log("... ready to rock and roll!!");
         encode_button.disabled = false;
+        input_file_element.disabled = false;
       });
     });
   </script>

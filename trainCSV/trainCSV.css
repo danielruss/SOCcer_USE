@@ -1,0 +1,12 @@
+.info {
+    border: thin black solid;
+    padding: 5px;
+    margin-bottom: 15px;
+    width: fit-content;
+    font-family: "Courier New", Courier, monospace;
+  }
+
+footer {
+  margin: 3px;
+  font-family: 'Courier New', Courier, monospace;
+}

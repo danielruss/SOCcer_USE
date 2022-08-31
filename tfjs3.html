@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.19.0/dist/tf.min.js"></script>
+    <script src="./tfjs3.js"></script>
+    <style>
+      .info {
+        border: thin black solid;
+        padding: 2px;
+        font-family: "Courier New", Courier, monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <span class="info" id="tf_info"></span>
+  </body>
+  <script>
+    document.getElementById("tf_info").innerText = `tfjs version: ${tf.version.tfjs}`;
+  </script>
+</html>
